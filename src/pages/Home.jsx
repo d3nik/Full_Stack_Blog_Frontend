@@ -1,17 +1,24 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
 
-import axios from '../axios';
-
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
+import { fetchPosts, fetchTags } from '../redux/slices/posts';
 
 export const Home = () => {
+  const dispatch = useDispatch();
+  const { posts, tags } = useSelector(state => state.posts);
+
+  const isPostsLoading = posts.status === 'loading';
+  const isTagsLoading = tags.status === 'loading';
+
   React.useEffect(() => {
-    axios.get('/posts');
+    dispatch(fetchPosts());
+    dispatch(fetchTags());
   }, []);
 
   return (
@@ -22,26 +29,25 @@ export const Home = () => {
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {[...Array(5)].map(() => (
+          {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) => 
+          isPostsLoading ? (
+            <Post key={index} isLoading={true} />
+          ) : (
             <Post
-              id={1}
-              title="Roast the code #1 | Rock Paper Scissors"
-              imageUrl="https://img.freepik.com/free-photo/programming-background-with-person-working-with-codes-computer_23-2150010125.jpg?semt=ais_hybrid&w=740&q=80"
-              user={{
-                avatarUrl:
-                  'https://images.pexels.com/photos/66863/goose-water-bird-nature-bird-66863.jpeg?cs=srgb&dl=pexels-pixabay-66863.jpg&fm=jpg',
-                fullName: 'd3_nik',
-              }}
-              createdAt={'12 жовтня 2025 р.'}
-              viewsCount={150}
-              commentsCount={3}
-              tags={['react', 'fun', 'typescript']}
+              id={obj._id}
+              title={obj.title}
+              imageUrl={obj.imageUrl}
+              user={obj.user} 
+              createdAt={obj.createdAt}
+              viewsCount={obj.viewsCount}
+              commentsCount={obj.commentsCount}
+              tags={obj.tags}
               isEditable
             />
           ))}
         </Grid>
         <Grid xs={4} item>
-          <TagsBlock items={['react', 'typescript', 'NextJS']} isLoading={false} />
+          <TagsBlock items={tags.items} isLoading={isTagsLoading} />
           <CommentsBlock
             items={[
               {
