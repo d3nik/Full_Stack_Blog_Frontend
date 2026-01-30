@@ -1,70 +1,207 @@
-# Getting Started with Create React App
+# Full Stack Blog — Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A polished, production-ready frontend for a Full Stack Blog application. This repository contains the UI that connects to the blog backend (API), handles authentication, authoring and editing posts, displays lists and single post views, and provides a smooth reading experience on desktop and mobile.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Table of contents
 
-### `npm start`
+- [Demo](#demo)
+- [Features](#features)
+- [Tech stack](#tech-stack)
+- [Getting started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Local setup](#local-setup)
+  - [Environment variables](#environment-variables)
+- [Available scripts](#available-scripts)
+- [Project structure](#project-structure)
+- [Design & accessibility](#design--accessibility)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [Troubleshooting](#troubleshooting)
+- [License](#license)
+- [Contact](#contact)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- Responsive, mobile-first UI
+- Authentication (signup / login / sessions / JWT)
+- Create, edit, preview, and delete blog posts
+- Rich text / Markdown editor with live preview
+- Post listing with pagination, tags, and search
+- Author profile pages
+- Commenting system (if supported by backend)
+- Image upload integration
+- SEO-friendly meta tags and Open Graph tags
+- Accessible (WCAG-aware) components
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Tech stack
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Replace this list with the actual libraries and frameworks used in the repo.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Framework: React / Next.js / Vue / Svelte / Angular
+- Language: JavaScript / TypeScript
+- Styling: CSS Modules / Tailwind / Styled Components / SCSS
+- State management: React Query / Redux / Zustand / Pinia
+- HTTP client: fetch / axios
+- Auth: JWT / OAuth / NextAuth (depending on backend)
+- Testing: Jest / Vitest / React Testing Library / Cypress
+- Linting & formatting: ESLint, Prettier
+- CI: GitHub Actions (suggested)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## Getting started
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Prerequisites
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Node.js (>= 16) and npm or yarn
+- Access to the backend API (local or remote)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Local setup
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/d3nik/Full_Stack_Blog_Frontend.git
+   cd Full_Stack_Blog_Frontend
+   ```
 
-## Learn More
+2. Install dependencies:
+   ```bash
+   # npm
+   npm install
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   # or yarn
+   yarn
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3. Create environment variables
 
-### Code Splitting
+   Copy the example environment file and update values:
+   ```bash
+   cp .env.example .env.local
+   ```
+   Example `.env.local` (replace values with your backend and keys):
+   ```env
+   # API
+   VITE_API_BASE_URL=https://api.example.com
+   # or NEXT_PUBLIC_API_BASE_URL for Next.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   # Auth
+   VITE_AUTH_TOKEN_KEY=auth_token
 
-### Analyzing the Bundle Size
+   # Optional integrations
+   VITE_SENTRY_DSN=
+   VITE_STRIPE_PUBLIC_KEY=
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+4. Run the app in development mode:
+   ```bash
+   # npm
+   npm run dev
 
-### Making a Progressive Web App
+   # or yarn
+   yarn dev
+   ```
+   Then open http://localhost:3000 (or the port shown) in your browser.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## Available scripts
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+List below are example scripts; update to match your project's package.json.
 
-### Deployment
+- `dev` — Start the development server
+- `build` — Create a production build
+- `start` — Start the production server (if applicable)
+- `lint` — Run ESLint
+- `format` — Run Prettier
+- `test` — Run unit tests
+- `test:watch` — Run unit tests in watch mode
+- `cypress` / `e2e` — Run end-to-end tests
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Example:
+```bash
+npm run dev
+npm run build
+npm run start
+npm run test
+npm run lint
+```
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Project structure
+
+A suggested folder structure — adjust to fit your repository:
+
+```
+/src
+  /components      # Reusable UI components
+  /pages           # Route pages (Next.js) or views
+  /features        # Domain-specific modules
+  /hooks           # Custom hooks
+  /services        # API clients / auth services
+  /styles          # Global styles / design tokens
+  /utils           # Utility helpers
+  /assets          # Images, icons, fonts
+/tests             # Test utilities and end-to-end tests
+/public            # Static files
+.env.example
+README.md
+```
+
+---
+
+## Design & accessibility
+
+- Follow a consistent design system (colors, spacing, typography).
+- Use semantic HTML and ARIA attributes for dynamic components.
+- Ensure color contrast meets WCAG AA standards.
+- Keyboard-first navigation and focus management for modals and dialogs.
+- Provide alt text for images and proper labels for form controls.
+
+---
+
+## Testing
+
+- Unit tests: write tests for critical components and utilities.
+- Integration tests: test flows like login, create/edit post.
+- End-to-end tests: run Cypress/Playwright for user flows.
+- Example commands:
+  ```bash
+  npm test
+  npm run test:watch
+  npm run e2e
+  ```
+
+Tips:
+- Mock API responses for unit tests.
+- Use CI to run tests on PRs and prevent regressions.
+
+---
+
+## Troubleshooting
+
+- CORS errors: ensure the backend includes the frontend origin in allowed origins.
+- Auth issues: confirm tokens are stored and sent correctly; check cookie vs header behavior.
+- 500 errors from API: check backend logs and API base URL in `.env`.
+- Port conflicts: change the port via environment variable or command line flag.
+
+---
+
+## License
+
+MIT © d3nik
+
+---
+
+## Contact
+
+Maintainer: d3nik  
+GitHub: https://github.com/d3nik 
