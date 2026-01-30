@@ -6,7 +6,6 @@ A polished, production-ready frontend for a Full Stack Blog application. This re
 
 ## Table of contents
 
-- [Demo](#demo)
 - [Features](#features)
 - [Tech stack](#tech-stack)
 - [Getting started](#getting-started)
@@ -18,8 +17,6 @@ A polished, production-ready frontend for a Full Stack Blog application. This re
 - [Design & accessibility](#design--accessibility)
 - [Testing](#testing)
 - [Deployment](#deployment)
-- [Contributing](#contributing)
-- [Troubleshooting](#troubleshooting)
 - [License](#license)
 - [Contact](#contact)
 
