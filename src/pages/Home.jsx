@@ -13,18 +13,29 @@ export const Home = () => {
   const dispatch = useDispatch();
   const userData = useSelector(state => state.auth.user);
   const { posts, tags } = useSelector(state => state.posts);
+  const [sortType, setSortType] = React.useState(0); // 0 - нові, 1 - популярні
 
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
 
   React.useEffect(() => {
-    dispatch(fetchPosts());
+    const sortParams = sortType === 0 ? { sortBy: 'createdAt', order: 'desc' } : { sortBy: 'viewsCount', order: 'desc'};
+    dispatch(fetchPosts(sortParams));
     dispatch(fetchTags());
-  }, []);
+  }, [sortType, dispatch]);
+
+  const handleTabChange = (event, newValue) => {
+    setSortType(newValue);
+  };
 
   return (
     <>
-      <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
+      <Tabs
+        style={{ marginBottom: 15 }}
+        value={sortType}
+        onChange={handleTabChange}
+        aria-label="sort posts"
+      >
         <Tab label="Нові" />
         <Tab label="Популярні" />
       </Tabs>
