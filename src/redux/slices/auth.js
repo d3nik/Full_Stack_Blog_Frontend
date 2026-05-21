@@ -16,6 +16,14 @@ export const fetchRegisterUser = createAsyncThunk('auth/fetchRegisterUser', asyn
   return data;
 });
 
+export const updateUserProfile = createAsyncThunk(
+  'auth/updateUserProfile',
+  async (updatedData) => {
+    const { data } = await axios.patch('/users/profile/me', updatedData);
+    return data;
+  }
+);
+
 const initialState = {
   user: null,
   status: 'idle',
@@ -66,10 +74,19 @@ const authSlice = createSlice({
       state.user = null;
       state.status = 'failed';
     },
+    [updateUserProfile.fulfilled]: (state, action) => {
+      state.user = action.payload;
+      state.status = 'succeeded';
+    },
+    [updateUserProfile.rejected]: (state) => {
+      state.status = 'failed';
+    },
   },
 });
 
 export const isAuthSelector = state => Boolean(state.auth.user); 
+
+export const isAdminSelector = state => state.auth.user?.role === 'admin';
 
 export const authReducer = authSlice.reducer;
 

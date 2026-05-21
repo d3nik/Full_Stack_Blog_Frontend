@@ -13,18 +13,29 @@ export const Home = () => {
   const dispatch = useDispatch();
   const userData = useSelector(state => state.auth.user);
   const { posts, tags } = useSelector(state => state.posts);
+  const [sortType, setSortType] = React.useState(0); // 0 - нові, 1 - популярні
 
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
 
   React.useEffect(() => {
-    dispatch(fetchPosts());
+    const sortParams = sortType === 0 ? { sortBy: 'createdAt', order: 'desc' } : { sortBy: 'viewsCount', order: 'desc'};
+    dispatch(fetchPosts(sortParams));
     dispatch(fetchTags());
-  }, []);
+  }, [sortType, dispatch]);
+
+  const handleTabChange = (event, newValue) => {
+    setSortType(newValue);
+  };
 
   return (
     <>
-      <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
+      <Tabs
+        style={{ marginBottom: 15 }}
+        value={sortType}
+        onChange={handleTabChange}
+        aria-label="sort posts"
+      >
         <Tab label="Нові" />
         <Tab label="Популярні" />
       </Tabs>
@@ -37,7 +48,7 @@ export const Home = () => {
             <Post
               id={obj._id}
               title={obj.title}
-              imageUrl={obj.imageUrl ? `http://localhost:4021${obj.imageUrl}` : ''}
+              imageUrl={obj.imageUrl ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}` : ""}
               user={obj.user} 
               createdAt={obj.createdAt}
               viewsCount={obj.viewsCount}
@@ -63,8 +74,6 @@ export const Home = () => {
                   fullName: 'Іван Іванов',
                   avatarUrl: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fG1hbnxlbnwwfHwwfHx8MA%3D%3D',
                 },
-                
-                // 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top'
                 text:  'Ще один тестовий коментар',
               },
             ]}

@@ -1,19 +1,50 @@
 import React from 'react';
 
 import styles from './AddComment.module.scss';
+import axios from '../../axios';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import TextField from '@mui/material/TextField';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 
-export const Index = () => {
+export const Index = ({onCommentSubmit}) => {
+  const [comment, setComment] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
+  const { id } = useParams();
+  const user = useSelector(state => state.auth.user);
+
+  if (!user) {
+    return null;
+  }
+
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    axios
+      .post(`/posts/${id}/comments`, { text: comment })
+      .then(res => {
+        setComment('');
+        onCommentSubmit?.();
+      })
+      .catch(err => {
+        console.warn(err);
+        alert('Помилка при додаванні коментаря');
+      })
+      .finally(() => setIsLoading(false));
+  };
+
   return (
     <>
       <div className={styles.root}>
         <Avatar
           classes={{ root: styles.avatar }}
-          src="https://images.pexels.com/photos/66863/goose-water-bird-nature-bird-66863.jpeg?cs=srgb&dl=pexels-pixabay-66863.jpg&fm=jpg"
-        />
+          src={user.avatarUrl ? `${process.env.REACT_APP_API_URL}${user.avatarUrl}` : ''}
+          sx={{ width: 40, height: 40 }}
+          alt={user?.fullName}
+        > 
+          {user?.fullName?.[0]?.toUpperCase()}
+        </Avatar>
         <div className={styles.form}>
           <TextField
             label="Написати коментар"
@@ -21,8 +52,15 @@ export const Index = () => {
             maxRows={10}
             multiline
             fullWidth
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
           />
-          <Button variant="contained">Відправити</Button>
+          <Button variant="contained"
+            onClick={handleSubmit}
+            disabled={isLoading || !comment.trim()}
+          >
+            {isLoading ? 'Завантаження...' : 'Додати коментар'}
+          </Button>
         </div>
       </div>
     </>

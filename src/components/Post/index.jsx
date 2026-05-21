@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import IconButton from '@mui/material/IconButton';
@@ -12,6 +12,7 @@ import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
 import { fetchRemovePost } from '../../redux/slices/posts';
+import { isAdminSelector } from '../../redux/slices/auth'
 
 export const Post = ({
   id,
@@ -26,31 +27,45 @@ export const Post = ({
   isFullPost,
   isLoading,
   isEditable,
+  onRemove,
 }) => {
   const dispatch = useDispatch();
+  const isAdmin = useSelector(isAdminSelector);
+  const isOwner = isEditable;
 
   if (isLoading) {
     return <PostSkeleton />;
   }
 
   const onClickRemove = () => {
-    if (window.confirm('Are you sure you want to delete this post?')) {
-      dispatch(fetchRemovePost(id));
+    if (onRemove) {
+      onRemove();
+    } else {
+      if (window.confirm('Are you sure you want to delete this post?')) {
+        dispatch(fetchRemovePost(id)); // used in post list — updates Redux
+      }
     }
   };
 
+  const canDelete = isOwner || isAdmin;
+  const canEdit = isOwner;
+
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
-      {isEditable && (
+      {(canEdit || canDelete) && (
         <div className={styles.editButtons}>
-          <Link to={`/posts/${id}/edit`}>
+          {canEdit && (
+            <Link to={`/posts/${id}/edit`}>
             <IconButton color="primary">
               <EditIcon />
             </IconButton>
           </Link>
-          <IconButton onClick={onClickRemove} color="secondary">
+        )}
+          {canDelete && (
+            <IconButton onClick={onClickRemove} color="secondary">
             <DeleteIcon />
           </IconButton>
+        )}
         </div>
       )}
       {imageUrl && (
