@@ -28,6 +28,7 @@ export const Home = () => {
     setSortType(newValue);
   };
 
+  console.log(process.env.REACT_APP_API_URL);
   return (
     <>
       <Tabs
