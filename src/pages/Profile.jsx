@@ -12,6 +12,7 @@ import {
   Divider,
 } from '@mui/material';
 import axios from '../axios';
+import { updateUserProfile } from '../redux/slices/auth';
 
 export const Profile = () => {
   const dispatch = useDispatch();
@@ -91,7 +92,7 @@ export const Profile = () => {
       }));
 
       // Dispatch action to update Redux store
-      // dispatch(updateUser(response.data));
+      dispatch(updateUserProfile(updatePayload));
     } catch (error) {
       setMessage(error.response?.data?.message || 'Failed to update profile');
     } finally {
