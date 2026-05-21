@@ -90,10 +90,19 @@ const postsSlice = createSlice({
       state.tags.status = "error";
     },
     [fetchRemovePost.pending]: (state, action) => {
+      // state.posts.items = state.posts.items.filter(
+      //   (obj) => obj._id !== action.meta.arg
+      // );
+    },
+    [fetchRemovePost.fulfilled]: (state, action) => {
       state.posts.items = state.posts.items.filter(
         (obj) => obj._id !== action.meta.arg
       );
     },
+    [fetchRemovePost.rejected]: (state, action) => {
+      // optionally show an error
+      console.error('Failed to delete post');
+    },  
   }
 }); 
 

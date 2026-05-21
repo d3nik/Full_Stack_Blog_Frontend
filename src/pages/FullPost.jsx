@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from '../axios';
 
 import { Post } from '../components/Post';
@@ -8,10 +8,18 @@ import { Index } from '../components/AddComment';
 import { CommentsBlock } from '../components/CommentsBlock';
 
 export const FullPost = () => {
+  const navigate = useNavigate();
   const [data, setData] = React.useState();
   const [comments, setComments] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
   const { id } = useParams();
+
+  const handleRemovePost = async () => {
+    if (window.confirm('Are you sure you want to delete this post?')) {
+      await axios.delete(`/posts/${data._id}`);
+      navigate('/');
+    }
+  };
 
   const fetchPost = async () => {
     axios
@@ -71,40 +79,26 @@ export const FullPost = () => {
         viewsCount={data.viewsCount}
         commentsCount={data.commentsCount}
         tags={data.tags}
-        isFullPost>
+        isFullPost
+        onRemove={handleRemovePost}
+      >
         <ReactMarkdown children={data.text} />
       </Post>
       <CommentsBlock
         items={ comments.map(comment => ({
+          _id: comment._id,
           user: {
+            _id: comment.user._id,
             fullName: comment.user.fullName,
             avatarUrl: comment.user.avatarUrl,
           },
           text: comment.text,
         })) }
         isLoading={false}
+        onCommentDeleted={fetchComments}
       >
         <Index  onCommentSubmit={fetchComments}/>
       </CommentsBlock>
     </>
   );
 };
-
-// [
-//           {
-//             user: {
-//               fullName: "Коля Ніколюк",
-//               avatarUrl: "https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-//             },
-//             text: "Це тестовий коментар 555555",
-//           },
-//           {
-//             user: {
-//               fullName: "Іван Іванов",
-//               avatarUrl: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fG1hbnxlbnwwfHwwfHx8MA%3D%3D",
-//             },
-
-//             // "When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top"
-//             text: "Це тестовий коментар 2",
-//           },
-//         ]

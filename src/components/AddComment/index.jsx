@@ -9,20 +9,23 @@ import TextField from '@mui/material/TextField';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 
-export const Index = () => {
+export const Index = ({onCommentSubmit}) => {
   const [comment, setComment] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const { id } = useParams();
   const user = useSelector(state => state.auth.user);
 
-  const handleSubmit = async ({ onCommentAdd }) => {
+  if (!user) {
+    return null;
+  }
+
+  const handleSubmit = async () => {
+    setIsLoading(true);
     axios
       .post(`/posts/${id}/comments`, { text: comment })
       .then(res => {
         setComment('');
-        if (onCommentAdd) {
-          onCommentAdd();
-        }
+        onCommentSubmit?.();
       })
       .catch(err => {
         console.warn(err);
@@ -36,11 +39,11 @@ export const Index = () => {
       <div className={styles.root}>
         <Avatar
           classes={{ root: styles.avatar }}
-          src={user?.avatarUrl || ''}
+          src={user.avatarUrl ? `http://localhost:4021${user.avatarUrl}` : ''}
           sx={{ width: 40, height: 40 }}
           alt={user?.fullName}
         > 
-        {user?.fullName?.[0]?.toUpperCase()}
+          {user?.fullName?.[0]?.toUpperCase()}
         </Avatar>
         <div className={styles.form}>
           <TextField

@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { isAuthSelector, logout } from '../../redux/slices/auth';
 import { useDispatch } from 'react-redux';
@@ -102,6 +103,13 @@ export const Header = () => {
                 >
                   <MenuItem disabled sx={{ fontWeight: 500 }}>
                     {userData?.fullName}
+                  </MenuItem>
+                  <MenuItem disabled sx={{ fontWeight: 500 }}>
+                    {userData?.role === 'admin' && (
+                      <Typography variant="body2" sx={{ color: 'error.main' }}>
+                        Admin
+                      </Typography>
+                    )}
                   </MenuItem>
                   <MenuItem onClick={handleProfileClick}>
                     Профіль

@@ -32,8 +32,10 @@ $purple: #b243ee;
   object-fit: cover;
 
   &Full {
-    min-height: 300px;
-    height: 100%;
+    height: auto;
+    max-height: 600px;
+    object-fit: contain; 
+    background-color: #f5f5f5;
   }
 }
 
