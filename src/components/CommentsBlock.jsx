@@ -53,7 +53,7 @@ export const CommentsBlock = ({ items, children, isLoading = true, onCommentDele
                 ) : (
                   <Avatar 
                     alt={obj.user.fullName}
-                    src={obj.user.avatarUrl ? `http://localhost:4021${obj.user.avatarUrl}` : ''}
+                    src={obj.user.avatarUrl ? `${process.env.REACT_APP_API_URL}${obj.user.avatarUrl}` : ''}
                     sx={{ width: 40, height: 40 }}
                   >
                     {obj.user.fullName?.[0]?.toUpperCase()}

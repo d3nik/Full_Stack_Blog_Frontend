@@ -113,7 +113,7 @@ export const Profile = () => {
       <Paper elevation={3} sx={{ p: 4 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
           <Avatar
-            src={userData?.avatarUrl ? `http://localhost:4021${userData.avatarUrl}` : ''}
+            src={userData?.avatarUrl ? `${process.env.REACT_APP_API_URL}${userData.avatarUrl}` : ''}
             sx={{ width: 120, height: 120, mb: 2 }}
           />
           <Typography variant="h5" sx={{ mb: 1 }}>

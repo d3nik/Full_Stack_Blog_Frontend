@@ -39,7 +39,7 @@ export const Index = ({onCommentSubmit}) => {
       <div className={styles.root}>
         <Avatar
           classes={{ root: styles.avatar }}
-          src={user.avatarUrl ? `http://localhost:4021${user.avatarUrl}` : ''}
+          src={user.avatarUrl ? `${process.env.REACT_APP_API_URL}${user.avatarUrl}` : ''}
           sx={{ width: 40, height: 40 }}
           alt={user?.fullName}
         > 

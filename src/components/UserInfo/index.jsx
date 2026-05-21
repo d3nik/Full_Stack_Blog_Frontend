@@ -6,7 +6,7 @@ export const UserInfo = ({ avatarUrl, fullName, additionalText }) => {
   return (
     <div className={styles.root}>
       <Avatar className={styles.avatar} 
-      src={avatarUrl ? `http://localhost:4021${avatarUrl}` : '/noavatar.png'} 
+      src={avatarUrl ? `${process.env.REACT_APP_API_URL}${avatarUrl}` : '/noavatar.png'} 
       alt={fullName}
       >
         {fullName?.[0]?.toUpperCase()}

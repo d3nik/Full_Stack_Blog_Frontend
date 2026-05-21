@@ -52,7 +52,7 @@ export const Header = () => {
       return (
         <Avatar
           alt={userData?.fullName}
-          src={`http://localhost:4021${userData.avatarUrl}`}
+          src={`${process.env.REACT_APP_API_URL}${userData.avatarUrl}`}
           sx={{ width: 40, height: 40, cursor: 'pointer' }}
         />
       );
