@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { SideBlock } from './SideBlock';
 import ListItem from '@mui/material/ListItem';
