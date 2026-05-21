@@ -8,6 +8,7 @@
 .inner {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
@@ -20,6 +21,8 @@
   border-radius: 5px;
   padding: 0 10px;
   text-decoration: none;
+  display: flex;
+  align-items: center;
 
   &:hover {
     background-color: #b243ee;
@@ -29,11 +32,26 @@
 }
 
 .buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
   button {
     margin-left: 10px;
   }
 
   a {
     text-decoration: none;
+  }
+}
+
+.avatarContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
   }
 }
