@@ -15,7 +15,7 @@ import DeleteIcon from '@mui/icons-material/Clear';
 import { isAdminSelector } from '../redux/slices/auth';
 import axios from '../axios';
 
-export const CommentsBlock = ({ items, children, isLoading = true, onCommentDeleted }) => {
+export const CommentsBlock = ({ items, children, isLoading = true, isPreview = false, onCommentDeleted }) => {
   const isAdmin = useSelector(isAdminSelector);
   const currentUser = useSelector(state => state.auth.user);
 
@@ -36,7 +36,7 @@ export const CommentsBlock = ({ items, children, isLoading = true, onCommentDele
             <ListItem 
               alignItems="flex-start"
               secondaryAction={
-                (isAdmin || currentUser?._id === obj.user._id) && !isLoading ? (
+                (isAdmin || currentUser?._id === obj.user._id) && !isPreview && !isLoading ? (
                   <IconButton
                     edge="end"
                     color="secondary"

@@ -79,6 +79,7 @@ export const Home = () => {
               },
             ]}
             isLoading={false}
+            isPreview={true}
           />
         </Grid>
       </Grid>
