@@ -16,9 +16,9 @@ export const Registration = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit, setError, formState: { errors, isValid } } = useForm({
     defaultValues: {
-      email: 'qwee@qwe.qwe',
-      password: '213213',
-      fullName: 'Joe Doe',
+      email: '',
+      password: '',
+      fullName: '',
     },
     mode: 'onChange',
   });
@@ -55,6 +55,7 @@ export const Registration = () => {
         <TextField 
           error = {Boolean(errors.fullName?.message)}
           helperText= {errors.fullName?.message}
+          placeholder="John Doe"
           {...register('fullName', { required: 'Вкажіть повне ім\'я' })}
           className={styles.field}
           label="Повне ім'я"
@@ -62,11 +63,13 @@ export const Registration = () => {
         <TextField 
           error = {Boolean(errors.email?.message)}
           helperText= {errors.email?.message}
+          placeholder="example@email.com"
           {...register('email', { required: 'Вкажіть пошту' })}
           className={styles.field} label="E-Mail" fullWidth />
         <TextField 
           error = {Boolean(errors.password?.message)}
           helperText= {errors.password?.message}
+          placeholder="••••••••"
           {...register('password', { required: 'Вкажіть пароль' })}
           className={styles.field} label="Пароль" fullWidth />
         <Button disabled={!isValid} type="submit" size="large" variant="contained" fullWidth>

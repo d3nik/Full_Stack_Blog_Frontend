@@ -15,8 +15,8 @@ export const Login = () => {
   const isAuth = useSelector(isAuthSelector);
   const { register, handleSubmit, formState: { errors, isValid } } = useForm({
     defaultValues: {
-      email: 'qwee@qwe.qwe',
-      password: '213213',
+      email: '',
+      password: '',
     },
     mode: 'onChange',
   });
@@ -53,6 +53,7 @@ export const Login = () => {
           className={styles.field}
           label="E-Mail"
           type="email"
+          placeholder="example@email.com"
           error = {Boolean(errors.email?.message)}
           helperText= {errors.email?.message}
           {...register('email', { required: 'Вкажіть пошту' })}
@@ -61,6 +62,8 @@ export const Login = () => {
         <TextField 
           className={styles.field} 
           label="Пароль"
+          type="password"
+          placeholder="••••••••"
           error = {Boolean(errors.password?.message)} 
           helperText= {errors.password?.message}
           {...register('password', { required: 'Вкажіть пароль' })}
